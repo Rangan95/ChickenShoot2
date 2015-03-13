@@ -5,6 +5,7 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.lordkadoc.map.Carte;
 import fr.remygenius.arme.Arme;
 
 public class Player {
@@ -20,9 +21,11 @@ public class Player {
 	
 	private String type;
 	
+	private Carte carte;
 	private Arme arme;
 	
-	public Player(int x, int y, int size, String type, Arme arme){
+	public Player(Carte carte, int x, int y, int size, String type, Arme arme){
+		this.carte = carte;
 		this.x = x;
 		this.y = y;
 		this.size = size;
@@ -84,14 +87,14 @@ public class Player {
 	
 	public void attaqueChasseur(int x2, int y2){
 		if(this.peutTirer()){
-			this.arme.tirer(this.x, this.y, y2, x2);
+			this.arme.tirer(this.carte,this.x, this.y, y2, x2);
 			this.arme.setRechargeTermine(false);
 		}	
 	}
 
 	public void attaquePoulet(int x2, int y2){
 		if(this.peutTirer()){
-			this.arme.poser(this.x, this.y);
+			this.arme.poser(this.carte,this.x, this.y);
 			this.arme.setRechargeTermine(false);
 		}	
 	}

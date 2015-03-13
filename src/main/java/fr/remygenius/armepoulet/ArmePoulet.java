@@ -1,6 +1,6 @@
 package fr.remygenius.armepoulet;
 
-import fr.lordkadoc.launcher.Server;
+import fr.lordkadoc.map.Carte;
 import fr.remygenius.arme.Arme;
 import fr.remygenius.thread.ThreadRecharge;
 
@@ -38,16 +38,16 @@ public class ArmePoulet extends Arme{
 	}
 
 	@Override
-	public void tirer(int x1, int y1, int x2, int y2) {
+	public void tirer(Carte carte, int x1, int y1, int x2, int y2) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void poser(int x, int y) {
+	public void poser(Carte carte, int x, int y) {
 		// TODO Auto-generated method stub
 		this.setMunitions(this.getMunitions()-1);
-		Server.serverInstance.getCarte().ajouterBombe(new Bombe(x, y, this.getDegat(), this.getTempsSurCarte(), this.rayonExplosion));
+		carte.ajouterBombe(new Bombe(x, y, this.getDegat(), this.getTempsSurCarte(), this.rayonExplosion));
 		new ThreadRecharge(this.getTempsDeRecharge(), this).start();
 	}
 

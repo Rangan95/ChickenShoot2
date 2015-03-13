@@ -5,7 +5,7 @@ import java.awt.Polygon;
 
 import fr.lordkadoc.entities.Player;
 import fr.lordkadoc.entities.Poulet;
-import fr.lordkadoc.launcher.Server;
+import fr.lordkadoc.launcher.ServerManager;
 import fr.lordkadoc.map.Carte;
 
 public class Balle {
@@ -31,13 +31,11 @@ public class Balle {
 		y += vy;
 	}
 	
-	public boolean verifierCollision(){
-		Carte carte = Server.serverInstance.getCarte();
+	public boolean verifierCollision(Carte carte){
 		return !carte.estVide(carte.cellule(new Point((int)x, (int)y)));
 	}
 	
-	public boolean verifierToucherPoulet(){
-		Carte carte = Server.serverInstance.getCarte();
+	public boolean verifierToucherPoulet(Carte carte){
 		Polygon poly;
 		for(Player p : carte.getPlayers()){
 			if(p instanceof Poulet){

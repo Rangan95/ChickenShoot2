@@ -11,6 +11,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
+import org.eclipse.jetty.websocket.api.Session;
+
 import fr.lordkadoc.entities.Chasseur;
 import fr.lordkadoc.entities.Player;
 import fr.lordkadoc.entities.Poulet;
@@ -20,7 +22,6 @@ import fr.remygenius.thread.ThreadBombe;
 import fr.remygenius.thread.ThreadExplosion;
 import fr.remygenius.thread.ThreadGame;
 
-import org.eclipse.jetty.websocket.api.*;
 
 public class ServerInstance {
 	
@@ -44,10 +45,10 @@ public class ServerInstance {
 		if(this.users.size() < this.maxUsers){
 			Player p;
 			if(this.carte.getNbChasseurs()<this.carte.getNbPoulets()){
-				p = new Chasseur(100,100);			
+				p = new Chasseur(this.carte,100,100);			
 			}
 			else {
-				p = new Poulet(50,50);
+				p = new Poulet(this.carte,50,50);
 			}
 			this.carte.getPlayers().add(p);
 			this.users.put(user, p);
@@ -67,10 +68,10 @@ public class ServerInstance {
 	}
 
 	public void demarrerPartie(){
-		this.diffuserMessage("Carte",this.carte.getJSon());
+		this.diffuserMessage("start",Json.createBuilderFactory(null).createObjectBuilder().add("data", "empty"));
 		new ThreadGame(this,20).start();
-		new ThreadBalle(this.getCarte().getBalles()).start();
-		new ThreadBombe(this.getCarte().getBombes()).start();
+		new ThreadBalle(this.carte,this.getCarte().getBalles()).start();
+		new ThreadBombe(this.carte,this.getCarte().getBombes()).start();
 		new ThreadExplosion(this.getCarte().getExplosions()).start();
 	}
 
@@ -102,7 +103,7 @@ public class ServerInstance {
 	public void diffuserMessage(String type, JsonObjectBuilder message) {
 		JsonBuilderFactory factory = Json.createBuilderFactory(null);
 		JsonObject json = factory.createObjectBuilder()
-				.add("type", "Carte")
+				.add("type", type)
 				.add("data", message).build();
 		for(Session s : users.keySet()){
 			try {

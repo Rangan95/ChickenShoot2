@@ -3,14 +3,17 @@ package fr.remygenius.thread;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.lordkadoc.map.Carte;
 import fr.remygenius.armechasseur.Balle;
 
 public class ThreadBalle extends Thread{
 	
+	private Carte carte;
 	private List<Balle> balles;
 	private int delai;
 	
-	public ThreadBalle(List<Balle> balles){
+	public ThreadBalle(Carte carte, List<Balle> balles){
+		this.carte = carte;
 		this.balles = balles;
 		this.delai = 20;
 	}
@@ -32,7 +35,7 @@ public class ThreadBalle extends Thread{
 			tmp2.addAll(balles);
 			for(Balle b : tmp){
 				b.deplacer();
-				if(b.verifierCollision() || b.verifierToucherPoulet()){
+				if(b.verifierCollision(carte) || b.verifierToucherPoulet(carte)){
 					tmp2.remove(b);
 				}
 			}

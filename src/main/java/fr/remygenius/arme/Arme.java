@@ -1,5 +1,7 @@
 package fr.remygenius.arme;
 
+import fr.lordkadoc.map.Carte;
+
 /**
  * Classe generale des armes du poulet et du chasseur
  * @author remy
@@ -39,9 +41,9 @@ public abstract class Arme {
 		this.degat = degat;
 	}
 
-	public abstract void tirer(int x1, int y1, int x2, int y2);
+	public abstract void tirer(Carte carte, int x1, int y1, int x2, int y2);
 	
-	public abstract void poser(int x, int y);
+	public abstract void poser(Carte carte, int x, int y);
 	
 	public String getNom(){
 		return nom;

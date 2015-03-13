@@ -1,6 +1,7 @@
 package fr.remygenius.armechasseur;
 
-import fr.lordkadoc.launcher.Server;
+import fr.lordkadoc.launcher.ServerManager;
+import fr.lordkadoc.map.Carte;
 import fr.remygenius.arme.Arme;
 import fr.remygenius.thread.ThreadRecharge;
 
@@ -18,7 +19,7 @@ public class ArmeChasseur extends Arme {
 		this.vitesseBalle = vitesseBalle;
 	}
 	
-	public void tirer(int x1, int y1, int x2, int y2){
+	public void tirer(Carte carte, int x1, int y1, int x2, int y2){
 		double vx = x2-x1;
 		double vy = y2-y1;
 		int d = (int)Math.sqrt(vx*vx+vy*vy);
@@ -28,7 +29,7 @@ public class ArmeChasseur extends Arme {
 		vy = vy*vitesseBalle;
 		this.setMunitions(this.getMunitions()-1);
 		
-		Server.serverInstance.getCarte().ajouterBalle(new Balle(x1, y1, vx, vy, this.getDegat()));
+		carte.ajouterBalle(new Balle(x1, y1, vx, vy, this.getDegat()));
 		new ThreadRecharge(this.getTempsDeRecharge(), this).start();
 	}
 	
@@ -44,7 +45,7 @@ public class ArmeChasseur extends Arme {
 	 * Inutiliser par le chasseur
 	 */
 	@Override
-	public void poser(int x, int y) {
+	public void poser(Carte carte, int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}

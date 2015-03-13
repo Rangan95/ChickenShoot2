@@ -63,6 +63,9 @@ var afficherCarte = function(carte){
 		drawRotatedImage(balle.x,balle.y,balle.angle,imgFleche);
 	}
 	
+	console.log("affichage carte");
+
+	
 }
 
 var drawRotatedImage = function(x,y,angle,img){
